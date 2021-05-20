@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/prefStoreFragment">
+    <fragment
+        android:id="@+id/prefStoreFragment"
+        android:name="com.perapps.datastoresample.prefds.PrefStoreFragment"
+        android:label="PrefStoreFragment"
+        tools:layout="@layout/fragment_pref_store">
+        <action
+            android:id="@+id/action_prefStoreFragment_to_protoStoreFragment"
+            app:destination="@id/protoStoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/protoStoreFragment"
+        android:name="com.perapps.datastoresample.protods.ProtoStoreFragment"
+        android:label="ProtoStore"
+        tools:layout="@layout/fragment_proto_store" >
+    </fragment>
+</navigation>

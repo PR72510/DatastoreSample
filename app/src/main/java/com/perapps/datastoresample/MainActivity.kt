@@ -9,11 +9,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.perapps.datastoresample.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "myPrefs")
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,40 +26,11 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setListeners()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
     }
 
-    private fun setListeners() {
-        binding.btnSave.setOnClickListener {
-            lifecycleScope.launch {
-                save(
-                    binding.tietSaveKey.text.toString(),
-                    binding.tietSaveValue.text.toString()
-                )
-            }
-        }
-
-        binding.btnGet.setOnClickListener {
-            lifecycleScope.launch {
-                val resultValue = read(binding.tietGetKey.text.toString())
-                binding.tvResultValue.text = resultValue
-            }
-        }
-    }
-
-    private suspend fun save(key: String, value: String) {
-        dataStore.edit { preferences ->
-            val preferenceKey = stringPreferencesKey(key)
-            preferences[preferenceKey] = value
-        }
-    }
-
-    private suspend fun read(key: String): String? {
-        val preferenceKey = stringPreferencesKey(key)
-        val preference = dataStore.data.first()
-
-        return preference[preferenceKey]
-    }
 
     override fun onDestroy() {
         super.onDestroy()
